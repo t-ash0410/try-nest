@@ -21,6 +21,6 @@
     // Append
     "paths": {
       "@backend/*": ["./src/*"]
-    },
+    }
   }
 }

@@ -7,7 +7,9 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
-    "dev": "nest start --debug --watch"
+    "dev": "nest start --debug --watch",
+    "check": "biome check",
+    "check:write": "biome check --write"
   },
   "dependencies": {
     "@apollo/server": "^4.11.3",
