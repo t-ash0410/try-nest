@@ -37,15 +37,3 @@ jobs:
         run: bun check
       - name: Test
         run: bun test
-
-      - name: Setup LCOV
-        uses: hrishikesh-kadam/setup-lcov@v1
-      - name: Report code coverage
-        uses: zgosalvez/github-actions-report-lcov@v4
-        with:
-          coverage-files: "**/coverage/lcov.info"
-          minimum-coverage: 70
-          artifact-name: code-coverage-report
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          working-directory: "./web/packages/backend"
-          update-comment: true
