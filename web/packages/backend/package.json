@@ -8,6 +8,7 @@
   "scripts": {
     "build": "nest build",
     "dev": "nest start --debug --watch",
+    "ci": "prisma generate && bun test",
     "migrate": "prisma migrate dev",
     "migrate:reset": "prisma migrate reset --force",
     "studio": "prisma studio",
