@@ -160,7 +160,7 @@ describe('/oidc/slack', () => {
     mock.restore()
   })
 
-  it('should return token', async () => {
+  it('should return token as exists user', async () => {
     const req = {
       params: {
         state: 'state',
@@ -238,5 +238,104 @@ describe('/oidc/slack', () => {
     })
 
     expect(db.user.create).not.toHaveBeenCalled()
+  })
+
+  it('should return token as new user', async () => {
+    mock.module('@backend/lib/db', () => {
+      return {
+        db: {
+          user: {
+            findFirst: mock(() => null),
+            create: mock(() => dummyUser),
+          },
+        },
+      }
+    })
+
+    const req = {
+      params: {
+        state: 'state',
+        code: 'code',
+      },
+      cookies: {
+        state: 'state',
+        nonce: 'nonce',
+      },
+    } as unknown as ExpressRequest
+
+    const res = {
+      cookie: mock(() => {}),
+      clearCookie: mock(() => {}),
+    } as unknown as ExpressResponse
+
+    expect(await controller.oidcSlack(req, res)).toMatchInlineSnapshot(`
+      {
+        "slackTeamId": "TXXXXX",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTczOTgyOTYwMCwiZXhwIjoxNzM5ODQwNDAwLCJpc3MiOiJsb2NhbGhvc3QifQ.xvkTO51W8XqKth_zhOHMYWkQ2S15NM_3eCP4X9VYmFE",
+      }
+    `)
+
+    expect(res.cookie).toHaveBeenCalledTimes(1)
+    expect(res.cookie).toHaveBeenNthCalledWith(
+      1,
+      JWT_KEY,
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTczOTgyOTYwMCwiZXhwIjoxNzM5ODQwNDAwLCJpc3MiOiJsb2NhbGhvc3QifQ.xvkTO51W8XqKth_zhOHMYWkQ2S15NM_3eCP4X9VYmFE',
+      {
+        signed: false,
+        expires: new Date('2025-02-18T01:00:00.000Z'),
+        path: '/',
+        secure: true,
+        domain: DOMAIN,
+        httpOnly: true,
+        sameSite: 'strict',
+      },
+    )
+
+    expect(res.clearCookie).toHaveBeenCalledTimes(2)
+    expect(res.clearCookie).toHaveBeenNthCalledWith(1, 'state', {
+      path: '/',
+      secure: true,
+      domain: DOMAIN,
+      httpOnly: true,
+      sameSite: 'strict',
+    })
+    expect(res.clearCookie).toHaveBeenNthCalledWith(2, 'nonce', {
+      path: '/',
+      secure: true,
+      domain: DOMAIN,
+      httpOnly: true,
+      sameSite: 'strict',
+    })
+
+    expect(global.fetch).toHaveBeenCalledTimes(1)
+    expect(global.fetch).toHaveBeenNthCalledWith(1, SLACK_SSO_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        client_id: SLACK_CLIENT_ID,
+        client_secret: SLACK_CLIENT_SECRET,
+        code: 'code',
+        redirect_uri: SLACK_SSO_REDIRECT_URL,
+      }),
+    })
+
+    expect(db.user.findFirst).toHaveBeenCalledTimes(1)
+    expect(db.user.findFirst).toHaveBeenNthCalledWith(1, {
+      where: {
+        email: 'john-doe@example.com',
+      },
+    })
+
+    expect(db.user.create).toHaveBeenCalledTimes(1)
+    expect(db.user.create).toHaveBeenNthCalledWith(1, {
+      data: {
+        email: 'john-doe@example.com',
+        name: 'John Doe',
+        slackUserId: 'UXXXXXXX',
+        slackTeamId: 'TXXXXXXX',
+      },
+    })
   })
 })
