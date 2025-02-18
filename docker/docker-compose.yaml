@@ -1,6 +1,6 @@
 services:
   postgres:
-    container_name: try-graphql-postgres
+    container_name: try-nest-postgres
     image: postgres:latest
     restart: always
     ports: 

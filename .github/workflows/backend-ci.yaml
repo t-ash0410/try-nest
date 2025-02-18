@@ -36,4 +36,4 @@ jobs:
       - name: Lint
         run: bun check
       - name: Test
-        run: bun test
+        run: bun ci
