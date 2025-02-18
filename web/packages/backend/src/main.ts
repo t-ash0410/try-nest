@@ -16,6 +16,7 @@ async function bootstrap() {
     httpsOptions,
   })
   app.use(cookieParser())
+
   await app.listen(BFF_PORT)
 }
 bootstrap()
