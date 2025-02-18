@@ -2,7 +2,7 @@ import { DOMAIN, JWT_KEY, JWT_SECRET } from '@backend/lib/env'
 import { Controller, Get, Req, Res } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import type { CookieOptions, Request, Response } from 'express'
-import { AuthService } from './service'
+import { AuthService } from './auth.service'
 
 @Controller('/auth')
 export class AuthController {

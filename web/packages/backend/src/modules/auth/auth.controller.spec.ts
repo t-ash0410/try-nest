@@ -21,8 +21,8 @@ import { JwtService } from '@nestjs/jwt'
 import { Test, type TestingModule } from '@nestjs/testing'
 import { Request as ExpressRequest, Response as ExpressResponse } from 'express'
 import { JWTVerifyResult, ResolvedKey, createRemoteJWKSet } from 'jose'
-import { AuthController } from './controller'
-import { AuthService } from './service'
+import { AuthController } from './auth.controller'
+import { AuthService } from './auth.service'
 
 describe('/oidc/session', () => {
   let controller: AuthController
