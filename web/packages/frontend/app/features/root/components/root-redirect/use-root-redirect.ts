@@ -1,34 +1,30 @@
-import { gql, useQuery } from '@apollo/client/index.js'
+import { useQuery } from '@apollo/client/index.js'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router'
+import { gql } from '~/__generated__'
 import { pagePaths } from '~/consts'
-import { handleError } from '~/util/handle-error'
 
-const getSession = gql`
-  query {
-    session @rest(type: "Session", path: "auth/session") {
+const GET_SESSION = gql(`
+  query GetSession {
+    getSession {
       userId
     }
   }
-`
+`)
 
 const useRootRedirect = () => {
   const nav = useNavigate()
 
-  const { data, loading, error } = useQuery(getSession)
+  const { loading, error } = useQuery(GET_SESSION)
 
   useEffect(() => {
     if (loading) return
     if (error) {
-      handleError(new Error('エラーが発生しました'))
-      return
-    }
-    if (data.status === 401) {
       nav(pagePaths.public.signin.path)
       return
     }
     nav(pagePaths.authorized.tickets.path)
-  }, [nav, data, loading, error])
+  }, [nav, loading, error])
 }
 
 export { useRootRedirect }
