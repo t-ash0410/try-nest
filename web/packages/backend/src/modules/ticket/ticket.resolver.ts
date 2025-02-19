@@ -6,7 +6,7 @@ import { GqlAuthGuard } from '../common/guards/gql.guard'
 import { CreateTicketInput } from './dto/create-ticket.dto'
 import { DeleteTicketInput } from './dto/delete-ticket.dto'
 import { UpdateTicketInput } from './dto/update-ticket.dto'
-import { TicketModel } from './ticket.models'
+import { TicketModel } from './ticket.model'
 import { TicketService } from './ticket.service'
 
 @Resolver()
