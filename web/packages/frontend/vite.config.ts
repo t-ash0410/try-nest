@@ -16,6 +16,7 @@ export default defineConfig({
   plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
   server: {
     https: httpsOption,
+    port: 3000,
     proxy: {},
   },
 })
