@@ -1,11 +1,11 @@
-import { gql, useQuery } from '@apollo/client'
+import { gql, useQuery } from '@apollo/client/index.js'
 import { useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router'
 import { localStorageKeys, pagePaths } from '~/consts'
 import { handleError } from '~/util/handle-error'
 
 const getSlackSsoResult = gql`
-  query($code: String!, $session: String!) {
+  query GetSession($code: String!, $session: String!) {
     session(code: $code, session: $session) @rest(type: "Session", path: "auth/oidc/slack") {
       slackTeamId
     }

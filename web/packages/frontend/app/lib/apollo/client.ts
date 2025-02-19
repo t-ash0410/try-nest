@@ -3,11 +3,11 @@ import {
   ApolloLink,
   InMemoryCache,
   createHttpLink,
-} from '@apollo/client'
+} from '@apollo/client/index.js'
 import { RestLink } from 'apollo-link-rest'
 
 const graphqlLink = createHttpLink({
-  uri: import.meta.env.VITE_BACKEND_URL,
+  uri: `${import.meta.env.VITE_BACKEND_URL}/graphql`,
   credentials: 'include',
 })
 

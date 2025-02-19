@@ -8,7 +8,7 @@ import {
 } from 'react-router'
 import type { Route } from './+types/root'
 import './app.css'
-import { ApolloProvider } from '@apollo/client'
+import { ApolloProvider } from '@apollo/client/index.js'
 import { client } from './lib/apollo'
 
 export function Layout({ children }: { children: React.ReactNode }) {

@@ -1,20 +1,21 @@
-import { gql, useQuery } from '@apollo/client'
+import { gql, useQuery } from '@apollo/client/index.js'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import { pagePaths } from '~/consts'
 import { handleError } from '~/util/handle-error'
 
 const getSession = gql`
-  query() {
-    session() @rest(type: "Session", path: "auth/session") {
+  query {
+    session @rest(type: "Session", path: "auth/session") {
+      userId
     }
   }
 `
 
-export function useRootRedirect() {
+const useRootRedirect = () => {
   const nav = useNavigate()
 
-  const { data, error, loading } = useQuery(getSession)
+  const { data, loading, error } = useQuery(getSession)
 
   useEffect(() => {
     if (loading) return
@@ -29,3 +30,5 @@ export function useRootRedirect() {
     nav(pagePaths.authorized.tickets.path)
   }, [nav, data, loading, error])
 }
+
+export { useRootRedirect }
