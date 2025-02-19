@@ -4,6 +4,7 @@ import { GraphQLModule } from '@nestjs/graphql'
 import { JwtService } from '@nestjs/jwt'
 import { AuthController } from './modules/auth/auth.controller'
 import { AuthService } from './modules/auth/auth.service'
+import { JwtStrategy } from './modules/common/strategies/jwt.strategy'
 import { HealthController } from './modules/health/health.controller'
 import { HealthService } from './modules/health/health.service'
 import { TicketModule } from './modules/ticket/ticket.module'
@@ -14,10 +15,11 @@ import { TicketModule } from './modules/ticket/ticket.module'
       driver: ApolloDriver,
       autoSchemaFile: 'schema.gql',
       playground: true,
+      sortSchema: true,
     }),
     TicketModule,
   ],
   controllers: [HealthController, AuthController],
-  providers: [HealthService, AuthService, JwtService],
+  providers: [JwtStrategy, HealthService, AuthService, JwtService],
 })
 export class AppModule {}

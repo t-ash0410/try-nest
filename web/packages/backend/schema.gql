@@ -1,0 +1,44 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateTicketInput {
+  deadline: DateTime
+  description: String
+  title: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input DeleteTicketInput {
+  ticketId: Int!
+}
+
+type Mutation {
+  create(input: CreateTicketInput!): TicketModel!
+  delete(input: DeleteTicketInput!): TicketModel!
+  update(input: UpdateTicketInput!): TicketModel!
+}
+
+type Query {
+  getTickets: [TicketModel!]
+}
+
+type TicketModel {
+  createdAt: DateTime!
+  deadline: DateTime
+  description: String
+  ticketId: Int!
+  title: String!
+  updatedAt: DateTime!
+}
+
+input UpdateTicketInput {
+  deadline: DateTime
+  description: String
+  ticketId: Int!
+  title: String
+}
