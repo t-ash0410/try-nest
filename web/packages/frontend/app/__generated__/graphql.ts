@@ -1,4 +1,5 @@
 /* eslint-disable */
+import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -77,3 +78,11 @@ export type UpdateTicketInput = {
   ticketId: Scalars['Int']['input'];
   title?: InputMaybe<Scalars['String']['input']>;
 };
+
+export type GetSessionQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetSessionQuery = { __typename?: 'Query', getSession?: Array<{ __typename?: 'SessionModel', userId: number }> | null };
+
+
+export const GetSessionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSession"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getSession"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userId"}}]}}]}}]} as unknown as DocumentNode<GetSessionQuery, GetSessionQueryVariables>;
