@@ -20,11 +20,17 @@ input DeleteTicketInput {
 type Mutation {
   create(input: CreateTicketInput!): TicketModel!
   delete(input: DeleteTicketInput!): TicketModel!
+  deleteSession: SessionModel!
   update(input: UpdateTicketInput!): TicketModel!
 }
 
 type Query {
+  getSession: [SessionModel!]
   getTickets: [TicketModel!]
+}
+
+type SessionModel {
+  userId: Int!
 }
 
 type TicketModel {
