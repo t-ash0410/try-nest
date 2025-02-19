@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "compile": "graphql-codegen",
     "build": "react-router build",
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",
@@ -34,6 +35,9 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
+    "@graphql-codegen/cli": "^5.0.5",
+    "@graphql-codegen/client-preset": "^4.6.3",
+    "@graphql-typed-document-node/core": "^3.2.0",
     "@react-router/dev": "^7.1.5",
     "@tailwindcss/vite": "^4.0.6",
     "@types/node": "^20",
