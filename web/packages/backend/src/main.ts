@@ -1,4 +1,5 @@
 import { readFileSync } from 'node:fs'
+import { ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import * as cookieParser from 'cookie-parser'
 import { AppModule } from './app.module'
@@ -16,6 +17,7 @@ async function bootstrap() {
     httpsOptions,
   })
   app.use(cookieParser())
+  app.useGlobalPipes(new ValidationPipe())
 
   await app.listen(BFF_PORT)
 }
