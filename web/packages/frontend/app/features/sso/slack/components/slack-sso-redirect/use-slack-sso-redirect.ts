@@ -1,16 +1,8 @@
-import { gql, useQuery } from '@apollo/client/index.js'
 import { useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router'
+import useSWR from 'swr'
 import { localStorageKeys, pagePaths } from '~/consts'
 import { handleError } from '~/util/handle-error'
-
-const getSlackSsoResult = gql`
-  query GetSession($code: String!, $session: String!) {
-    session(code: $code, session: $session) @rest(type: "Session", path: "auth/oidc/slack") {
-      slackTeamId
-    }
-  }
-`
 
 export function useSlackSSORedirect() {
   const nav = useNavigate()
@@ -19,23 +11,25 @@ export function useSlackSSORedirect() {
   const code = params.get('code')
   const state = params.get('state')
 
-  const { data, error, loading } = useQuery(getSlackSsoResult, {
-    variables: {
-      code,
-      state,
-    },
+  const qp = new URLSearchParams({
+    code: code || '',
+    state: state || '',
   })
+  const url = `${import.meta.env.VITE_BACKEND_URL}/auth/oidc/slack?${qp}`
 
+  const { data, error, isLoading } = useSWR(url, (url) => {
+    return fetch(url, { credentials: 'include' }).then((res) => res.json())
+  })
   useEffect(() => {
-    if (loading) return
+    if (isLoading) {
+      return
+    }
     if (error) {
-      handleError(new Error('サインインに失敗しました'))
+      handleError(error)
       nav(pagePaths.public.root.path)
       return
     }
-    if (data.slackTeamId) {
-      localStorage.setItem(localStorageKeys.SLACK_TEAM_ID, data.slackTeamId)
-    }
+    localStorage.setItem(localStorageKeys.SLACK_TEAM_ID, data.slackTeamId)
     nav(pagePaths.authorized.tickets.path)
-  }, [nav, data, error, loading])
+  }, [nav, data, error, isLoading])
 }

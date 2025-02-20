@@ -16,6 +16,9 @@ export function useSlackSSOButton() {
     try {
       const res = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/auth/oidc/session`,
+        {
+          credentials: 'include',
+        },
       )
       if (!res.ok) {
         throw new Error('サインインに失敗しました')
