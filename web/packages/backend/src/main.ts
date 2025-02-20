@@ -3,7 +3,7 @@ import { ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import * as cookieParser from 'cookie-parser'
 import { AppModule } from './app.module'
-import { BFF_PORT, USE_HTTPS } from './lib/env'
+import { BFF_PORT, CORS_ORIGIN, USE_HTTPS } from './lib/env'
 
 async function bootstrap() {
   const httpsOptions = USE_HTTPS
@@ -15,6 +15,10 @@ async function bootstrap() {
 
   const app = await NestFactory.create(AppModule, {
     httpsOptions,
+  })
+  app.enableCors({
+    origin: CORS_ORIGIN,
+    credentials: true,
   })
   app.use(cookieParser())
   app.useGlobalPipes(new ValidationPipe())

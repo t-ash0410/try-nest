@@ -162,10 +162,6 @@ describe('/oidc/slack', () => {
 
   it('should return token as exists user', async () => {
     const req = {
-      params: {
-        state: 'state',
-        code: 'code',
-      },
       cookies: {
         state: 'state',
         nonce: 'nonce',
@@ -177,7 +173,9 @@ describe('/oidc/slack', () => {
       clearCookie: mock(() => {}),
     } as unknown as ExpressResponse
 
-    expect(await controller.oidcSlack(req, res)).toMatchInlineSnapshot(`
+    expect(
+      await controller.oidcSlack(req, res, 'code', 'state'),
+    ).toMatchInlineSnapshot(`
       {
         "slackTeamId": "TXXXXX",
         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTczOTgyOTYwMCwiZXhwIjoxNzM5ODQwNDAwLCJpc3MiOiJsb2NhbGhvc3QifQ.xvkTO51W8XqKth_zhOHMYWkQ2S15NM_3eCP4X9VYmFE",
@@ -253,10 +251,6 @@ describe('/oidc/slack', () => {
     })
 
     const req = {
-      params: {
-        state: 'state',
-        code: 'code',
-      },
       cookies: {
         state: 'state',
         nonce: 'nonce',
@@ -268,7 +262,9 @@ describe('/oidc/slack', () => {
       clearCookie: mock(() => {}),
     } as unknown as ExpressResponse
 
-    expect(await controller.oidcSlack(req, res)).toMatchInlineSnapshot(`
+    expect(
+      await controller.oidcSlack(req, res, 'code', 'state'),
+    ).toMatchInlineSnapshot(`
       {
         "slackTeamId": "TXXXXX",
         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTczOTgyOTYwMCwiZXhwIjoxNzM5ODQwNDAwLCJpc3MiOiJsb2NhbGhvc3QifQ.xvkTO51W8XqKth_zhOHMYWkQ2S15NM_3eCP4X9VYmFE",

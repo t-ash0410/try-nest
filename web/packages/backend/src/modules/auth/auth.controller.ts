@@ -1,5 +1,5 @@
 import { DOMAIN, JWT_KEY, JWT_SECRET } from '@backend/lib/env'
-import { Controller, Get, Req, Res } from '@nestjs/common'
+import { Controller, Get, Query, Req, Res } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import type { CookieOptions, Request, Response } from 'express'
 import { AuthService } from './auth.service'
@@ -32,13 +32,15 @@ export class AuthController {
   async oidcSlack(
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
+    @Query('code') code: string,
+    @Query('state') state: string,
   ) {
     this.clearSessionCookie(res)
 
     const execSsoRes = await this.authService.execSso({
       params: {
-        state: req.params.state,
-        code: req.params.code,
+        state,
+        code,
       },
       cookie: {
         state: req.cookies.state,

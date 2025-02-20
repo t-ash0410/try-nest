@@ -10,10 +10,9 @@
     "ignore": [
       "node_modules",
       "dist",
-      ".pylon",
       ".react-router",
       "build",
-      "schema.generated.ts"
+      "__generated__"
     ]
   },
   "formatter": {

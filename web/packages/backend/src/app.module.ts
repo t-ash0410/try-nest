@@ -7,6 +7,7 @@ import { AuthService } from './modules/auth/auth.service'
 import { JwtStrategy } from './modules/common/strategies/jwt.strategy'
 import { HealthController } from './modules/health/health.controller'
 import { HealthService } from './modules/health/health.service'
+import { SessionModule } from './modules/session/session.module'
 import { TicketModule } from './modules/ticket/ticket.module'
 
 @Module({
@@ -14,10 +15,12 @@ import { TicketModule } from './modules/ticket/ticket.module'
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: 'schema.gql',
+      context: ({ req, res }) => ({ req, res }),
       playground: true,
       sortSchema: true,
     }),
     TicketModule,
+    SessionModule,
   ],
   controllers: [HealthController, AuthController],
   providers: [JwtStrategy, HealthService, AuthService, JwtService],
