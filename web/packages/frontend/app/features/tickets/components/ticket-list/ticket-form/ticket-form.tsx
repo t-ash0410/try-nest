@@ -1,8 +1,9 @@
 import { useState } from 'react'
+import type { CreateTicketInput } from '~/__generated__/types'
 import { Button, DateTimePicker, Input, Textarea } from '~/components'
 
 type TicketFormProps = {
-  onSubmit: (ticket: unknown) => void
+  onSubmit: (ticket: CreateTicketInput) => void
   onCancel: () => void
 }
 
