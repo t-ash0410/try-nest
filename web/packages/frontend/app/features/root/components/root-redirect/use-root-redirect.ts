@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/client/index.js'
+import { useQuery } from '@apollo/client/index'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import { gql } from '~/__generated__'
