@@ -8,7 +8,6 @@ import { JwtStrategy } from './modules/common/strategies/jwt.strategy'
 import { HealthController } from './modules/health/health.controller'
 import { HealthService } from './modules/health/health.service'
 import { SessionModule } from './modules/session/session.module'
-import { SessionResolver } from './modules/session/session.resolver'
 import { TicketModule } from './modules/ticket/ticket.module'
 
 @Module({
@@ -23,12 +22,6 @@ import { TicketModule } from './modules/ticket/ticket.module'
     SessionModule,
   ],
   controllers: [HealthController, AuthController],
-  providers: [
-    JwtStrategy,
-    HealthService,
-    AuthService,
-    JwtService,
-    SessionResolver,
-  ],
+  providers: [JwtStrategy, HealthService, AuthService, JwtService],
 })
 export class AppModule {}

@@ -14,8 +14,8 @@ import { SessionModel } from './session.model'
 @Resolver()
 @UseGuards(GqlAuthGuard)
 export class SessionResolver {
-  @Query(() => [SessionModel], { nullable: true })
-  async getSession(@GqlUser() user): Promise<{ userId: number }> {
+  @Query(() => SessionModel, { nullable: true })
+  async session(@GqlUser() user): Promise<{ userId: number }> {
     return {
       userId: user.userId,
     }
