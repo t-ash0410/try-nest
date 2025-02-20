@@ -31,9 +31,9 @@ export class AuthController {
   @Get('/oidc/slack')
   async oidcSlack(
     @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
     @Query('code') code: string,
     @Query('state') state: string,
-    @Res({ passthrough: true }) res: Response,
   ) {
     this.clearSessionCookie(res)
 
