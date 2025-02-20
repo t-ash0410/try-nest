@@ -1,12 +1,7 @@
 import { DOMAIN, JWT_KEY } from '@backend/lib/env'
 import { UseGuards } from '@nestjs/common'
-import {
-  Context,
-  GraphQLExecutionContext,
-  Mutation,
-  Query,
-  Resolver,
-} from '@nestjs/graphql'
+import { Context, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { Response } from 'express'
 import { GqlUser } from '../common/decorators/user.decorator'
 import { GqlAuthGuard } from '../common/guards/gql.guard'
 import { SessionModel } from './session.model'
@@ -24,9 +19,9 @@ export class SessionResolver {
   @Mutation(() => SessionModel)
   async deleteSession(
     @GqlUser() user,
-    @Context() context: GraphQLExecutionContext,
+    @Context() { res }: { res: Response },
   ): Promise<{ userId: number }> {
-    context.getContext().res.clearCookie(JWT_KEY, {
+    res.clearCookie(JWT_KEY, {
       path: '/',
       secure: true,
       domain: DOMAIN,

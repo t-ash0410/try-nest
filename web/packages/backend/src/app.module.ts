@@ -15,6 +15,7 @@ import { TicketModule } from './modules/ticket/ticket.module'
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: 'schema.gql',
+      context: ({ req, res }) => ({ req, res }),
       playground: true,
       sortSchema: true,
     }),

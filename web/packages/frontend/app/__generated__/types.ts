@@ -112,3 +112,8 @@ export type DeleteTicketMutationVariables = Exact<{
 
 
 export type DeleteTicketMutation = { __typename?: 'Mutation', delete: { __typename?: 'TicketModel', ticketId: number, title: string, description?: string | null, deadline?: any | null, createdAt: any, updatedAt: any } };
+
+export type DeleteSessionMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DeleteSessionMutation = { __typename?: 'Mutation', deleteSession: { __typename?: 'SessionModel', userId: number } };
