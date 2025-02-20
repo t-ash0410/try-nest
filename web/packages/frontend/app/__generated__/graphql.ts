@@ -53,8 +53,8 @@ export type MutationUpdateArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  getSession?: Maybe<Array<SessionModel>>;
   getTickets?: Maybe<Array<TicketModel>>;
+  session?: Maybe<SessionModel>;
 };
 
 export type SessionModel = {
@@ -82,7 +82,7 @@ export type UpdateTicketInput = {
 export type GetSessionQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetSessionQuery = { __typename?: 'Query', getSession?: Array<{ __typename?: 'SessionModel', userId: number }> | null };
+export type GetSessionQuery = { __typename?: 'Query', session?: { __typename?: 'SessionModel', userId: number } | null };
 
 
-export const GetSessionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSession"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getSession"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userId"}}]}}]}}]} as unknown as DocumentNode<GetSessionQuery, GetSessionQueryVariables>;
+export const GetSessionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSession"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"session"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userId"}}]}}]}}]} as unknown as DocumentNode<GetSessionQuery, GetSessionQueryVariables>;

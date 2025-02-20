@@ -6,7 +6,7 @@ import { pagePaths } from '~/consts'
 
 const GET_SESSION = gql(`
   query GetSession {
-    getSession {
+    session {
       userId
     }
   }

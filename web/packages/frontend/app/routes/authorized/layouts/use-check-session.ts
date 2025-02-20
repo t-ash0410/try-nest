@@ -1,15 +1,16 @@
-import { gql, useQuery } from '@apollo/client/index.js'
+import { useQuery } from '@apollo/client/index.js'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router'
+import { gql } from '~/__generated__'
 import { pagePaths } from '~/consts'
 
-const GET_SESSION = gql`
+const GET_SESSION = gql(`
   query GetSession {
-    getSession {
+    session {
       userId
     }
   }
-`
+`)
 
 const useCheckSession = () => {
   const nav = useNavigate()

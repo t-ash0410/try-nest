@@ -11,9 +11,13 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * 3. It does not support dead code elimination, so it will add unused operations.
  *
  * Therefore it is highly recommended to use the babel or swc plugin for production.
+ * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
-const documents = {
-    "\n  query GetSession {\n    getSession {\n      userId\n    }\n  }\n": types.GetSessionDocument,
+type Documents = {
+    "\n  query GetSession {\n    session {\n      userId\n    }\n  }\n": typeof types.GetSessionDocument,
+};
+const documents: Documents = {
+    "\n  query GetSession {\n    session {\n      userId\n    }\n  }\n": types.GetSessionDocument,
 };
 
 /**
@@ -33,7 +37,7 @@ export function gql(source: string): unknown;
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query GetSession {\n    getSession {\n      userId\n    }\n  }\n"): (typeof documents)["\n  query GetSession {\n    getSession {\n      userId\n    }\n  }\n"];
+export function gql(source: "\n  query GetSession {\n    session {\n      userId\n    }\n  }\n"): (typeof documents)["\n  query GetSession {\n    session {\n      userId\n    }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};
