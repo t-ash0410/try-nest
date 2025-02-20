@@ -19,7 +19,6 @@ async function bootstrap() {
   app.enableCors({
     origin: CORS_ORIGIN,
     credentials: true,
-    // allowHeaders: 'Access-Control-Allow-Credentials',
   })
   app.use(cookieParser())
   app.useGlobalPipes(new ValidationPipe())
